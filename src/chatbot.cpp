@@ -79,7 +79,7 @@ ChatBot &ChatBot::operator=(const ChatBot &source)
 
 ChatBot::ChatBot(ChatBot &&source)
 {
-  std::cout << "MOVING (c’tor) instance " << &source << " to instance " << this << std::endl;
+  std::cout << "ChatBot move assignment operator: Moving instance " << &source << " to instance " << this << std::endl;
   
   // move data handles
   _currentNode = source._currentNode;
@@ -97,7 +97,7 @@ ChatBot::ChatBot(ChatBot &&source)
 
 ChatBot &ChatBot::operator=(ChatBot &&source)
 {
-  std::cout << "MOVING (assign) instance " << &source << " to instance " << this << std::endl;
+  std::cout << "ChatBot move constructor: Moving instance " << &source << " to instance " << this << std::endl;
   
   // self assignment
   if (this == &source) {return *this;}
