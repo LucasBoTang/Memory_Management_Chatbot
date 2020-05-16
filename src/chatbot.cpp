@@ -42,11 +42,84 @@ ChatBot::~ChatBot()
     }
 }
 
-//// STUDENT CODE
-////
+ChatBot::ChatBot(const ChatBot &source)
+{
+  std::cout << "ChatBot copy constructor" << std::endl;
+  
+  // delete heap data
+  if (_image != NULL) {delete _image;} 
+  
+  // copy data handles
+  _currentNode = source._currentNode;
+  _rootNode = source._rootNode;
+  _chatLogic = source._chatLogic;
+  _image = new wxBitmap();
+  *_image = *source._image;
+}
 
-////
-//// EOF STUDENT CODE
+ChatBot &ChatBot::operator=(const ChatBot &source)
+{
+  std::cout << "ChatBot copy assignment operator" << std::endl;
+  
+  // self assignment
+  if (this == &source) {return *this;}
+  
+  // delete heap data
+  if (_image != NULL) {delete _image;} 
+  
+  // copy data handles
+  _currentNode = source._currentNode;
+  _rootNode = source._rootNode;
+  _chatLogic = source._chatLogic;
+  _image = new wxBitmap();
+  *_image = *source._image;
+  
+  return *this;
+}
+
+ChatBot::ChatBot(ChatBot &&source)
+{
+  std::cout << "MOVING (c’tor) instance " << &source << " to instance " << this << std::endl;
+  
+  // move data handles
+  _currentNode = source._currentNode;
+  _rootNode = source._rootNode;
+  _chatLogic = source._chatLogic;
+  _chatLogic->SetChatbotHandle(this);
+  _image = source._image;
+  
+  // invalidate source
+  source._currentNode = nullptr;
+  source._rootNode = nullptr;
+  source._chatLogic = nullptr;
+  source._image = NULL;
+}
+
+ChatBot &ChatBot::operator=(ChatBot &&source)
+{
+  std::cout << "MOVING (assign) instance " << &source << " to instance " << this << std::endl;
+  
+  // self assignment
+  if (this == &source) {return *this;}
+  
+  // delete heap data
+  if (_image != NULL) {delete _image;} 
+  
+  // move data handles
+  _currentNode = source._currentNode;
+  _rootNode = source._rootNode;
+  _chatLogic = source._chatLogic;
+  _chatLogic->SetChatbotHandle(this);
+  _image = source._image;
+  
+  // invalidate source
+  source._currentNode = nullptr;
+  source._rootNode = nullptr;
+  source._chatLogic = nullptr;
+  source._image = NULL;
+  
+  return *this;
+}
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
